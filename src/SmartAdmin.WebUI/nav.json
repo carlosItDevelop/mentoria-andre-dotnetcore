@@ -21,25 +21,6 @@
       ]
     },
     {
-      "title": "Autenticacao",
-      "icon": "fal fa-shield-alt",
-      "roles": [
-        "Administrator"
-      ],
-      "items": [
-        {
-          "title": "Registrar",
-          "href": "account_register",
-          "roles": []
-        },
-        {
-          "title": "Login",
-          "href": "account_login",
-          "roles": []
-        }
-      ]
-    },
-    {
       "title": "Funcionarios",
       "icon": "fal fa-cog",
       "roles": [],
@@ -52,43 +33,6 @@
         {
           "title": "Novo funcionario",
           "href": "funcionarios_create",
-          "roles": []
-        }
-      ]
-    },
-    {
-      "title": "Documentation",
-      "showOnSeed": false,
-      "icon": "fal fa-book",
-      "roles": [],
-      "items": [
-        {
-          "title": "General Docs",
-          "href": "docs_general.html",
-          "roles": []
-        },
-        {
-          "title": "Flavors & Editions",
-          "href": "docs_flavors_editions.html",
-          "roles": []
-        },
-        {
-          "title": "Community Support",
-          "href": "docs_community_support.html",
-          "roles": []
-        },
-        {
-          "title": "Licensing",
-          "href": "docs_licensing.html",
-          "roles": []
-        },
-        {
-          "title": "Build Notes",
-          "text": "Build Notes",
-          "href": "docs_buildnotes.html",
-          "span": {
-            "text": "v4.5.1"
-          },
           "roles": []
         }
       ]
