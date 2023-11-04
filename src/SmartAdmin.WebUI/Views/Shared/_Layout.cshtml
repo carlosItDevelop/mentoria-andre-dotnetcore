@@ -37,6 +37,8 @@
     <partial name="_GoogleAnalytics" />
     <partial name="_ScriptsBasePlugins" />
 
+    
+    @await RenderSectionAsync("Header", required: false)
     @RenderSection("Styles", required: false)
     @RenderSection("ScriptsBlock", required: false)
     @await RenderSectionAsync("scripts", required: false)
