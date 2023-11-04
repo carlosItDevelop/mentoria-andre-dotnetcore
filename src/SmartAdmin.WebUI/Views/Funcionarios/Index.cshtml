@@ -1,10 +1,12 @@
 ﻿@model IEnumerable<SmartAdmin.WebUI.Models.Funcionario>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData ["Title"] = "Lista de Funcionários";
+    ViewData ["PageName"] = "funcionarios-index";
+    ViewData ["Category1"] = "Funcionarios";
+    ViewData ["Heading"] = "Font Awesome 5: <span class='fw-500'>Regular</span>";
+    ViewData ["PageDescription"] = "Lista de Funcionarios";
 }
-
-<h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>

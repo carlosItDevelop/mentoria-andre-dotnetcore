@@ -63,6 +63,23 @@
       ]
     },
     {
+      "title": "Funcionarios",
+      "icon": "fal fa-cog",
+      "roles": [],
+      "items": [
+        {
+          "title": "Lista de Funcionarios",
+          "href": "funcionarios_index",
+          "roles": []
+        },
+        {
+          "title": "Novo funcionario",
+          "href": "funcionarios_create",
+          "roles": []
+        }
+      ]
+    },
+    {
       "title": "Documentation",
       "showOnSeed": false,
       "icon": "fal fa-book",
