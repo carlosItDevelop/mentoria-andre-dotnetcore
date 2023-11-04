@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using SmartAdmin.WebUI.Data;
+using SmartAdmin.WebUI.Extensions;
 using SmartAdmin.WebUI.Models;
 
 namespace SmartAdmin.WebUI
@@ -40,7 +41,9 @@ namespace SmartAdmin.WebUI
 
             services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoleManager<RoleManager<IdentityRole>>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddErrorDescriber<IdentityMensagensPortugues>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddTransient<IEmailSender, EmailSender>();
 
