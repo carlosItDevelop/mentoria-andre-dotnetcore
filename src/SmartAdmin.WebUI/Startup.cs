@@ -89,9 +89,9 @@ namespace SmartAdmin.WebUI
                     "{controller=intel}/{action=analyticsdashboard}");
                 // intel/analyticsdashboard
 
-                endpoints.MapControllerRoute(
-                    "default",
-                    "{controller=AspNetCore}/{action=Welcome}");
+                //endpoints.MapControllerRoute(
+                //    "default",
+                //    "{controller=AspNetCore}/{action=Welcome}");
 
                 endpoints.MapRazorPages();
             });
