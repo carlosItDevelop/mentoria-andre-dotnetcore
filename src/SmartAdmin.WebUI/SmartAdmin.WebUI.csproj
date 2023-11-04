@@ -5,6 +5,14 @@
     <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="navCopy.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="navCopy.txt" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.12" />

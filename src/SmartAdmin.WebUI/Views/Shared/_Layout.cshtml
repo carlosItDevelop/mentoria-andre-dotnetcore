@@ -20,6 +20,8 @@
                         <partial name="_PageBreadcrumb" />
                         <div class="subheader"><partial name="_PageHeading" />@RenderSection("Subheaderblock", required: false)</div>
                     }
+                    @RenderSection("PageHeading", required: false)
+
                     @RenderBody()
                 </main>
                 <partial name="_PageContentOverlay" />
@@ -34,6 +36,8 @@
     <partial name="_PageSettings" />
     <partial name="_GoogleAnalytics" />
     <partial name="_ScriptsBasePlugins" />
+
+    @RenderSection("Styles", required: false)
     @RenderSection("ScriptsBlock", required: false)
     @await RenderSectionAsync("scripts", required: false)
 

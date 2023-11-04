@@ -17,6 +17,48 @@
           "showOnSeed": false,
           "href": "intel_marketing_dashboard.html",
           "roles": []
+        },
+        {
+          "title": "Introduction",
+          "href": "intel_introduction.html",
+          "roles": []
+        },
+        {
+          "title": "Privacy",
+          "href": "intel_privacy.html",
+          "roles": []
+        }
+      ]
+    },
+    {
+      "title": "Theme Settings",
+      "icon": "fal fa-cog",
+      "roles": [],
+      "items": [
+        {
+          "title": "How it works",
+          "href": "settings_how_it_works.html",
+          "roles": []
+        },
+        {
+          "title": "Layout Options",
+          "href": "settings_layout_options.html",
+          "roles": []
+        },
+        {
+          "title": "Theme Modes (beta)",
+          "href": "settings_theme_modes.html",
+          "roles": []
+        },
+        {
+          "title": "Skin Options",
+          "href": "settings_skin_options.html",
+          "roles": []
+        },
+        {
+          "title": "Saving to Database",
+          "href": "settings_saving_db.html",
+          "roles": []
         }
       ]
     },
@@ -92,6 +134,16 @@
           "roles": []
         }
       ]
+    },
+    {
+      "title": "ASP.NET Core 3.1",
+      "roles": []
+    },
+    {
+      "title": "Welcome",
+      "href": "aspnetcore_welcome.html",
+      "icon": "fal fa-graduation-cap",
+      "roles": []
     },
     {
       "title": "Authorization",
