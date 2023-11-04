@@ -9,7 +9,7 @@ namespace SmartAdmin.WebUI.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options){}
 
-        public DbSet<Funcionario> funcionarios { get; set; }
+        public DbSet<Funcionario> Funcionarios { get; set; }
 
     }
 }
