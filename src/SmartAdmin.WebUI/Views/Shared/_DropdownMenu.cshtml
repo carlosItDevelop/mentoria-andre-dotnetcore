@@ -1,4 +1,5 @@
 @using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> SignInManager
 
 
 <div class="dropdown-header bg-trans-gradient d-flex flex-row py-4 rounded-top">
@@ -15,27 +16,24 @@
 <div class="dropdown-divider m-0"></div>
 
 @*Se o usuário esta logado exibir o link de logout*@
-@*     @if (SignInManager.IsSignedIn(User))
-    {
-        <li class="nav-item">
-            <form method="post" asp-controller="account" asp-action="logout">
-                <button type="submit" style="width:auto"
-                        class="nav-link btn btn-link py-0">
-                    Logout @User.Identity.Name
-                </button>
-            </form>
-        </li>
-    } else
-    {
- *@
-<a class="dropdown-item" asp-controller="account" asp-action="register">
-    <span data-i18n="drpdwn.reset_layout">Registrar</span>
-    
-</a>
-<a class="dropdown-item" asp-controller="account" asp-action="login">
-    <span data-i18n="drpdwn.reset_layout">Login</span>
-</a>
-@*  } *@
+@if (SignInManager.IsSignedIn(User))
+{
+    <form method="post" asp-controller="account" asp-action="logout">
+        <button type="submit" style="width:auto"
+                class="dropdown-item">
+            Logout @User.Identity.Name
+        </button>
+    </form>
+} else {
+
+    <a class="dropdown-item" asp-controller="account" asp-action="register">
+        <span data-i18n="drpdwn.reset_layout">Registrar</span>
+
+    </a>
+    <a class="dropdown-item" asp-controller="account" asp-action="login">
+        <span data-i18n="drpdwn.reset_layout">Login</span>
+    </a>
+}
 
 @* <a href="#" class="dropdown-item" data-action="app-reset">
 	<span data-i18n="drpdwn.reset_layout">Reset Layout</span>
@@ -53,25 +51,9 @@
     <span data-i18n="drpdwn.fullscreen">Fullscreen</span>
     <i class="float-right text-muted fw-n">F11</i>
 </a>
+<div class="dropdown-divider m-0"></div>
 <a href="#" class="dropdown-item" data-action="app-print">
     <span data-i18n="drpdwn.print">Print</span>
     <i class="float-right text-muted fw-n">Ctrl + P</i>
 </a>
-<div class="dropdown-multilevel dropdown-multilevel-left">
-    <div class="dropdown-item">
-        Language
-    </div>
-    <div class="dropdown-menu">
-        <a href="#?lang=fr" class="dropdown-item" data-action="lang" data-lang="fr">Français</a>
-        <a href="#?lang=en" class="dropdown-item active" data-action="lang" data-lang="en">English (US)</a>
-        <a href="#?lang=es" class="dropdown-item" data-action="lang" data-lang="es">Español</a>
-        <a href="#?lang=ru" class="dropdown-item" data-action="lang" data-lang="ru">Русский язык</a>
-        <a href="#?lang=jp" class="dropdown-item" data-action="lang" data-lang="jp">日本語</a>
-        <a href="#?lang=ch" class="dropdown-item" data-action="lang" data-lang="ch">中文</a>
-    </div>
-</div>
-<div class="dropdown-divider m-0"></div>
-<a class="dropdown-item fw-500 pt-3 pb-3" asp-area="Identity" asp-page="/account/logout">
-    <span data-i18n="drpdwn.page-logout">Logout</span>
-    <span class="float-right fw-n">&commat;@(Settings.Theme.Twitter)</span>
-</a>
+
