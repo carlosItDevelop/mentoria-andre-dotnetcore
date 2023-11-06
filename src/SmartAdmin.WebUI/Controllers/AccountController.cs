@@ -21,7 +21,9 @@ namespace SmartAdmin.WebUI.Controllers
         {
             return View();
         }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -59,7 +61,7 @@ namespace SmartAdmin.WebUI.Controllers
         }
 
         [HttpPost]
-        //[AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
