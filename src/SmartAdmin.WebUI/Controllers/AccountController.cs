@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SmartAdmin.WebUI.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SmartAdmin.WebUI.Controllers
 {
@@ -51,12 +52,14 @@ namespace SmartAdmin.WebUI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
+        //[AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
