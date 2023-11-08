@@ -24,6 +24,15 @@ namespace SmartAdmin.WebUI.Data
                             Email = "carlos.itdeveloper@gmail.com"
                         });
 
+            // Configurações adicionais para ApplicationUser
+            builder.Entity<ApplicationUser>(entity =>
+            {
+                entity.Property(e => e.NomeCompleto).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Apelido).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.DataDeNascimento).IsRequired().HasColumnType("DateTime");
+                // Não é necessário configurar a coluna "Ativo" pois o EF Core inferirá como um campo booleano
+            });
+
             base.OnModelCreating(builder);
         } 
 
