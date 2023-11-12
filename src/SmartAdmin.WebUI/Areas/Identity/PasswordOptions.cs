@@ -1,4 +1,4 @@
-﻿namespace SmartAdmin.WebUI.Views.Account
+﻿namespace SmartAdmin.WebUI.Areas.Identity
 {
     public class PasswordOptions
     {
