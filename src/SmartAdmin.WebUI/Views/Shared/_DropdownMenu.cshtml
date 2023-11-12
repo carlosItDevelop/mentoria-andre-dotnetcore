@@ -24,6 +24,14 @@
             Logout @User.Identity.Name
         </button>
     </form>
+
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="UserRoles" asp-action="Index">User Roles</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="RoleManager" asp-action="Index">Role Manager</a>
+    </li>
+
 } else {
 
     <a class="dropdown-item" asp-controller="account" asp-action="register">
