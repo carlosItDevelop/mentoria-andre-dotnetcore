@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,6 +43,7 @@ namespace SmartAdmin.WebUI
                 .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddErrorDescriber<IdentityMensagensPortugues>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultUI()
                 .AddDefaultTokenProviders();
 
             //services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -65,21 +64,19 @@ namespace SmartAdmin.WebUI
             });
 
             // Attibuto Global de Autorização
-            services.AddControllersWithViews(config =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                       .RequireAuthenticatedUser()
-                       .Build();
-                config.Filters.Add(new AuthorizeFilter(policy));
-            });
+            //services.AddControllersWithViews(config =>
+            //{
+            //    var policy = new AuthorizationPolicyBuilder()
+            //           .RequireAuthenticatedUser()
+            //           .Build();
+            //    config.Filters.Add(new AuthorizeFilter(policy));
+            //});
 
 
-            services
-                .AddControllersWithViews();
+
 
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddRazorPages();
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -87,6 +84,9 @@ namespace SmartAdmin.WebUI
                 options.LogoutPath = "/Identity/Account/Logout";
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
             });
+
+            services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
