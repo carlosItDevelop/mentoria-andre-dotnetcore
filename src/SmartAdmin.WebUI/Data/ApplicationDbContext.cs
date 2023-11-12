@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SmartAdmin.WebUI.Models;
 
@@ -14,6 +15,8 @@ namespace SmartAdmin.WebUI.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
+            base.OnModelCreating(builder);
+
             builder.Entity<Funcionario>().HasData(
                         new Funcionario
                         {
@@ -23,16 +26,43 @@ namespace SmartAdmin.WebUI.Data
                             Email = "carlos.itdeveloper@gmail.com"
                         });
 
-            // Configurações adicionais para ApplicationUser
+
+            
+            builder.HasDefaultSchema("Identity");
             builder.Entity<ApplicationUser>(entity =>
             {
-                entity.Property(e => e.NomeCompleto).IsRequired().HasMaxLength(100);
-                entity.Property(e => e.Apelido).IsRequired().HasMaxLength(50);
-                entity.Property(e => e.DataDeNascimento).IsRequired().HasColumnType("DateTime");
-                // Não é necessário configurar a coluna "Ativo" pois o EF Core inferirá como um campo booleano
+                entity.ToTable(name: "User");
             });
 
-            base.OnModelCreating(builder);
+            builder.Entity<IdentityRole>(entity =>
+            {
+                entity.ToTable(name: "Role");
+            });
+            builder.Entity<IdentityUserRole<string>>(entity =>
+            {
+                entity.ToTable("UserRoles");
+            });
+
+            builder.Entity<IdentityUserClaim<string>>(entity =>
+            {
+                entity.ToTable("UserClaims");
+            });
+
+            builder.Entity<IdentityUserLogin<string>>(entity =>
+            {
+                entity.ToTable("UserLogins");
+            });
+
+            builder.Entity<IdentityRoleClaim<string>>(entity =>
+            {
+                entity.ToTable("RoleClaims");
+
+            });
+
+            builder.Entity<IdentityUserToken<string>>(entity =>
+            {
+                entity.ToTable("UserTokens");
+            });
         } 
 
     }
