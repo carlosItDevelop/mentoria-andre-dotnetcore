@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SmartAdmin.WebUI.Models
 {
-    public class UserPermission
+    public class UserPermissionViewModel
     {
-        public UserPermission()
+        public UserPermissionViewModel()
         {
             Id = Guid.NewGuid();
         }

@@ -17,20 +17,20 @@ namespace SmartAdmin.WebUI.Services.Implementations
             _context = context;
         }
 
-        public async Task<IEnumerable<UserPermission>> GetUserPermissionsAsync(string userId)
+        public async Task<IEnumerable<UserPermissionViewModel>> GetUserPermissionsAsync(string userId)
         {
             return await _context.UserPermissions
                 .Where(up => up.UserId == userId)
                 .ToListAsync();
         }
 
-        public async Task AddPermissionAsync(UserPermission permission)
+        public async Task AddPermissionAsync(UserPermissionViewModel permission)
         {
             _context.UserPermissions.Add(permission);
             await _context.SaveChangesAsync();
         }
 
-        public async Task RemovePermissionAsync(UserPermission permission)
+        public async Task RemovePermissionAsync(UserPermissionViewModel permission)
         {
             _context.UserPermissions.Remove(permission);
             await _context.SaveChangesAsync();
