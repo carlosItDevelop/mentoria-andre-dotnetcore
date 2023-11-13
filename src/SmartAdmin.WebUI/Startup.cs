@@ -11,6 +11,8 @@ using Microsoft.Extensions.Options;
 using SmartAdmin.WebUI.Data;
 using SmartAdmin.WebUI.Extensions;
 using SmartAdmin.WebUI.Models;
+using SmartAdmin.WebUI.Services.Abstractions;
+using SmartAdmin.WebUI.Services.Implementations;
 
 namespace SmartAdmin.WebUI
 {
@@ -76,6 +78,7 @@ namespace SmartAdmin.WebUI
 
 
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IUserPermissionsService, UserPermissionsService>();
 
 
             services.ConfigureApplicationCookie(options =>
