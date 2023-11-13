@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SmartAdmin.WebUI.Models
 {
-    public class UserPermissionViewModel
+    public class UserPermission
     {
-        public UserPermissionViewModel()
+        public UserPermission()
         {
             Id = Guid.NewGuid();
         }
@@ -19,6 +20,7 @@ namespace SmartAdmin.WebUI.Models
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
+
 
         [Required]
         public string ControllerName { get; set; }

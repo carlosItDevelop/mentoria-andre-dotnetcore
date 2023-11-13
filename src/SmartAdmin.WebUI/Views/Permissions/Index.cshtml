@@ -1,0 +1,41 @@
+﻿@model IEnumerable<UserPermissionsViewModel>
+
+<table>
+    <thead>
+        <tr>
+            <th>Usuário</th>
+            <th>Controller</th>
+            <th>Action</th>
+            <th>Ler</th>
+            <th>Escrever</th>
+            <th>Excluir</th>
+            <th>Acesso Total</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            foreach (var permission in item.Permissions)
+            {
+                <tr>
+                    <!-- Colunas existentes -->
+                    <td>
+                        <form asp-action="UpdatePermission" method="post">
+                            <input type="hidden" name="permissionId" value="@permission.Id" />
+                            <input type="checkbox" name="canRead" @(permission.CanRead ? "checked" : "") />
+                            <input type="checkbox" name="canWrite" @(permission.CanWrite ? "checked" : "") />
+                            <input type="checkbox" name="canDelete" @(permission.CanDelete ? "checked" : "") />
+                            <input type="checkbox" name="canAccessAll" @(permission.CanAccessAll ? "checked" : "") />
+                            <button type="submit">Atualizar</button>
+                        </form>
+                    </td>
+                    <td>
+                        <button formaction="RemovePermission" formmethod="post">Remover</button>
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
