@@ -1,3 +1,8 @@
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
 @if (Settings.Features.AppHeader)
 {
     <header class="page-header" role="banner">
@@ -74,9 +79,26 @@
                 </div>
             </div>
             <div>
-                <a href="#" data-toggle="dropdown" title="@(Settings.Theme.Email)" class="header-icon d-flex align-items-center justify-content-center ml-2">
-                    <img src="~/img/demo/avatars/@(Settings.Theme.Avatar)" class="profile-image rounded-circle" alt="@(Settings.Theme.User)">
-                </a>
+                @*                 <a href="#" data-toggle="dropdown" title="@(Settings.Theme.Email)" class="header-icon d-flex align-items-center justify-content-center ml-2">
+            <img src="~/img/demo/avatars/@(Settings.Theme.Avatar)" class="profile-image rounded-circle" alt="@(Settings.Theme.User)">
+            </a> *@
+
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    @if (UserManager.GetUserAsync(User).Result.ProfilePicture != null)
+                    {
+                        <a href="#" data-toggle="dropdown" title="@(Settings.Theme.Email)" class="header-icon d-flex align-items-center justify-content-center ml-2">
+                            <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
+                        </a>
+                    }
+                } else
+                {
+                    <a href="#" data-toggle="dropdown" title="@(Settings.Theme.Email)" class="header-icon d-flex align-items-center justify-content-center ml-2">
+                        <img src="~/img/demo/avatars/@(Settings.Theme.Avatar)" class="profile-image rounded-circle" alt="@(Settings.Theme.User)">
+                    </a>
+                }
+
                 <div class="dropdown-menu dropdown-menu-animated dropdown-lg">
                     <partial name="_DropdownMenu" />
                 </div>

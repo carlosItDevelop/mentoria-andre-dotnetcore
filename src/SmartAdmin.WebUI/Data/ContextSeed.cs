@@ -23,9 +23,9 @@ namespace SmartAdmin.WebUI.Data
             var defaultUser = new ApplicationUser
             {
                 UserName = "superadmin",
-                Email = "superadmin@gmail.com",
-                FirstName = "Mukesh",
-                LastName = "Murugan",
+                Email = "contato.cooperchip@gmail.com",
+                FirstName = "Carlos A",
+                LastName = "Santos",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true
             };

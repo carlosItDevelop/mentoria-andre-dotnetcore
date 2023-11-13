@@ -1,12 +1,25 @@
 @using Microsoft.AspNetCore.Identity;
 @inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 
 <div class="dropdown-header bg-trans-gradient d-flex flex-row py-4 rounded-top">
     <div class="d-flex flex-row align-items-center mt-1 mb-1 color-white">
-        <span class="mr-2">
-            <img src="~/img/demo/avatars/@(Settings.Theme.Avatar)" class="rounded-circle profile-image" alt="@(Settings.Theme.User)">
-        </span>
+
+
+        @if (SignInManager.IsSignedIn(User))
+        {
+            @if (UserManager.GetUserAsync(User).Result.ProfilePicture != null)
+            {
+                <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
+            }
+        } else
+        {
+            <span class="mr-2">
+                <img src="~/img/demo/avatars/@(Settings.Theme.Avatar)" class="rounded-circle profile-image" alt="@(Settings.Theme.User)">
+            </span>
+        }
+
         <div class="info-card-text">
             <div class="fs-lg text-truncate text-truncate-lg">@(Settings.Theme.User)</div>
             <span class="text-truncate text-truncate-md opacity-80">@(Settings.Theme.Email)</span>
@@ -18,12 +31,15 @@
 @*Se o usuário esta logado exibir o link de logout*@
 @if (SignInManager.IsSignedIn(User))
 {
-    <form method="post" asp-controller="account" asp-action="logout">
-        <button type="submit" style="width:auto"
-                class="dropdown-item">
-            Logout @User.Identity.Name
-        </button>
-    </form>
+
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Olá @User.Identity.Name!</a>
+    </li>
+    <li class="nav-item">
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        </form>
+    </li>
 
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="" asp-controller="UserRoles" asp-action="Index">User Roles</a>
@@ -32,13 +48,17 @@
         <a class="nav-link text-dark" asp-area="" asp-controller="RoleManager" asp-action="Index">Role Manager</a>
     </li>
 
-} else {
 
-    <a class="dropdown-item" asp-controller="account" asp-action="register">
+} else
+{
+
+    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">
+        Register
         <span data-i18n="drpdwn.reset_layout">Registrar</span>
 
     </a>
-    <a class="dropdown-item" asp-controller="account" asp-action="login">
+    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login">
+        Login
         <span data-i18n="drpdwn.reset_layout">Login</span>
     </a>
 }
