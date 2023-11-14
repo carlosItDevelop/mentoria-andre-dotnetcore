@@ -25,41 +25,40 @@ namespace SmartAdmin.WebUI.Data
                             Departamento = Departamento.TI,
                             Email = "carlos.itdeveloper@gmail.com"
                         });
-
-
             
             builder.HasDefaultSchema("Identity");
-            builder.Entity<ApplicationUser>(entity =>
+            _ = builder.Entity<ApplicationUser>(entity =>
             {
                 entity.ToTable(name: "User");
             });
 
-            builder.Entity<IdentityRole>(entity =>
+            _ = builder.Entity<IdentityRole>(entity =>
             {
                 entity.ToTable(name: "Role");
             });
-            builder.Entity<IdentityUserRole<string>>(entity =>
+
+            _ = builder.Entity<IdentityUserRole<string>>(entity =>
             {
                 entity.ToTable("UserRoles");
             });
 
-            builder.Entity<IdentityUserClaim<string>>(entity =>
+            _ = builder.Entity<IdentityUserClaim<string>>(entity =>
             {
                 entity.ToTable("UserClaims");
             });
 
-            builder.Entity<IdentityUserLogin<string>>(entity =>
+            _ = builder.Entity<IdentityUserLogin<string>>(entity =>
             {
                 entity.ToTable("UserLogins");
             });
 
-            builder.Entity<IdentityRoleClaim<string>>(entity =>
+            _ = builder.Entity<IdentityRoleClaim<string>>(entity =>
             {
                 entity.ToTable("RoleClaims");
 
             });
 
-            builder.Entity<IdentityUserToken<string>>(entity =>
+            _ = builder.Entity<IdentityUserToken<string>>(entity =>
             {
                 entity.ToTable("UserTokens");
             });

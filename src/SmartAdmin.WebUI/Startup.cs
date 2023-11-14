@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,11 +50,6 @@ namespace SmartAdmin.WebUI
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
 
-            //services.AddIdentity<ApplicationUser, IdentityRole>()
-            //        .AddEntityFrameworkStores<ApplicationDbContext>()
-            //        .AddDefaultUI()
-            //.AddDefaultTokenProviders();
-
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -64,17 +61,6 @@ namespace SmartAdmin.WebUI
                 options.Password.RequireUppercase = true;
 
             });
-
-            // Attibuto Global de Autorização
-            //services.AddControllersWithViews(config =>
-            //{
-            //    var policy = new AuthorizationPolicyBuilder()
-            //           .RequireAuthenticatedUser()
-            //           .Build();
-            //    config.Filters.Add(new AuthorizeFilter(policy));
-            //});
-
-
 
 
             services.AddTransient<IEmailSender, EmailSender>();
@@ -88,7 +74,15 @@ namespace SmartAdmin.WebUI
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
             });
 
-            services.AddControllersWithViews();
+            // Attibuto Global de Autorização
+            services.AddControllersWithViews(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                       .RequireAuthenticatedUser()
+                       .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
+
             services.AddRazorPages();
         }
 
@@ -97,7 +91,6 @@ namespace SmartAdmin.WebUI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseDatabaseErrorPage();  // Obsoleto 3.1
                 app.UseMigrationsEndPoint();
 
             }
@@ -119,11 +112,6 @@ namespace SmartAdmin.WebUI
                 endpoints.MapControllerRoute(
                     "intel",
                     "{controller=intel}/{action=analyticsdashboard}");
-                // intel/analyticsdashboard
-
-                //endpoints.MapControllerRoute(
-                //    "default",
-                //    "{controller=AspNetCore}/{action=Welcome}");
 
                 endpoints.MapRazorPages();
             });
