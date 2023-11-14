@@ -11,7 +11,6 @@ namespace SmartAdmin.WebUI.Data
             : base(options){}
 
         public DbSet<Funcionario> Funcionarios { get; set; }
-        public DbSet<UserPermission> UserPermissions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
