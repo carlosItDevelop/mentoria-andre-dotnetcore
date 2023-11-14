@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using SmartAdmin.WebUI.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SmartAdmin.WebUI.Controllers
 {
@@ -18,6 +19,8 @@ namespace SmartAdmin.WebUI.Controllers
             _roleManager = roleManager;
             _userManager = userManager;
         }
+
+        [Authorize(Roles = "Basic")]
         public async Task<IActionResult> Index()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -34,6 +37,8 @@ namespace SmartAdmin.WebUI.Controllers
             }
             return View(userRolesViewModel);
         }
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Manage(string userId)
         {
             ViewBag.userId = userId;
@@ -64,6 +69,8 @@ namespace SmartAdmin.WebUI.Controllers
             }
             return View(model);
         }
+
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> Manage(List<ManageUserRolesViewModel> model, string userId)
         {
@@ -87,6 +94,8 @@ namespace SmartAdmin.WebUI.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        [Authorize(Roles = "Basic")]
         private async Task<List<string>> GetUserRoles(ApplicationUser user)
         {
             return new List<string>(await _userManager.GetRolesAsync(user));

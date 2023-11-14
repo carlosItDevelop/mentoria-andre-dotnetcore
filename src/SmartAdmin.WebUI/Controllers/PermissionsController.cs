@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SmartAdmin.WebUI.Data;
 using SmartAdmin.WebUI.Models;
 using SmartAdmin.WebUI.Services.Abstractions;
@@ -76,7 +77,8 @@ namespace SmartAdmin.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> RemovePermission(Guid permissionId)
         {
-            var permission = await _context.UserPermission.FindAsync(permissionId);
+            var permission = await _context.UserPermissions
+                                          .FirstOrDefaultAsync(p => p.Id == permissionId);
 
             if (permission != null)
             {
@@ -84,6 +86,7 @@ namespace SmartAdmin.WebUI.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
 
     }
 }

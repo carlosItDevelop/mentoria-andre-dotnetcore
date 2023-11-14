@@ -19,7 +19,13 @@
             foreach (var permission in item.Permissions)
             {
                 <tr>
-                    <!-- Colunas existentes -->
+                    <td>@item.User.UserName</td>
+                    <td>@permission.ControllerName</td>
+                    <td>@permission.ActionName</td>
+                    <td><input type="checkbox" disabled @(permission.CanRead ? "checked" : "") /></td>
+                    <td><input type="checkbox" disabled @(permission.CanWrite ? "checked" : "") /></td>
+                    <td><input type="checkbox" disabled @(permission.CanDelete ? "checked" : "") /></td>
+                    <td><input type="checkbox" disabled @(permission.CanAccessAll ? "checked" : "") /></td>
                     <td>
                         <form asp-action="UpdatePermission" method="post">
                             <input type="hidden" name="permissionId" value="@permission.Id" />
@@ -29,13 +35,15 @@
                             <input type="checkbox" name="canAccessAll" @(permission.CanAccessAll ? "checked" : "") />
                             <button type="submit">Atualizar</button>
                         </form>
-                    </td>
-                    <td>
-                        <button formaction="RemovePermission" formmethod="post">Remover</button>
+                        <form asp-action="RemovePermission" method="post">
+                            <input type="hidden" name="permissionId" value="@permission.Id" />
+                            <button type="submit">Remover</button>
+                        </form>
                     </td>
                 </tr>
             }
         }
+
 
     </tbody>
 </table>
