@@ -6,22 +6,21 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SmartAdmin.WebUI.Controllers
 {
-    public class RoleManagerController : Controller
+    [Authorize(Roles = "SuperAdmin")]
+    public class RolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        public RoleManagerController(RoleManager<IdentityRole> roleManager)
+
+        public RolesController(RoleManager<IdentityRole> roleManager)
         {
             _roleManager = roleManager;
         }
 
-        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             var roles = await _roleManager.Roles.ToListAsync();
             return View(roles);
         }
-
-        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddRole(string roleName)
         {

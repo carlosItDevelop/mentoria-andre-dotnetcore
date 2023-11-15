@@ -9,50 +9,28 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace SmartAdmin.WebUI.Controllers
 {
+    [Authorize(Roles = "SuperAdmin")]
     public class UserRolesController : Controller
     {
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserRolesController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UserRolesController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
-            _roleManager = roleManager;
             _userManager = userManager;
+            _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string userId)
         {
-            var users = await _userManager.Users.ToListAsync();
-            var userRolesViewModel = new List<UserRolesViewModel>();
-            foreach (ApplicationUser user in users)
-            {
-                var thisViewModel = new UserRolesViewModel();
-                thisViewModel.UserId = user.Id;
-                thisViewModel.Email = user.Email;
-                thisViewModel.FirstName = user.FirstName;
-                thisViewModel.LastName = user.LastName;
-                thisViewModel.Roles = await GetUserRoles(user);
-                userRolesViewModel.Add(thisViewModel);
-            }
-            return View(userRolesViewModel);
-        }
-
-        public async Task<IActionResult> Manage(string userId)
-        {
-            ViewBag.userId = userId;
+            var viewModel = new List<UserRolesViewModel>();
             var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
+            foreach (var role in _roleManager.Roles.ToList())
             {
-                ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
-                return View("NotFound");
-            }
-            ViewBag.UserName = user.UserName;
-            var model = new List<ManageUserRolesViewModel>();
-            foreach (var role in _roleManager.Roles)
-            {
-                var userRolesViewModel = new ManageUserRolesViewModel
+                var userRolesViewModel = new UserRolesViewModel
                 {
-                    RoleId = role.Id,
                     RoleName = role.Name
                 };
                 if (await _userManager.IsInRoleAsync(user, role.Name))
@@ -63,38 +41,27 @@ namespace SmartAdmin.WebUI.Controllers
                 {
                     userRolesViewModel.Selected = false;
                 }
-                model.Add(userRolesViewModel);
+                viewModel.Add(userRolesViewModel);
             }
+            var model = new ManageUserRolesViewModel()
+            {
+                UserId = userId,
+                UserRoles = viewModel
+            };
+
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Manage(List<ManageUserRolesViewModel> model, string userId)
+        public async Task<IActionResult> Update(string id, ManageUserRolesViewModel model)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
-            {
-                return View();
-            }
+            var user = await _userManager.FindByIdAsync(id);
             var roles = await _userManager.GetRolesAsync(user);
             var result = await _userManager.RemoveFromRolesAsync(user, roles);
-            if (!result.Succeeded)
-            {
-                ModelState.AddModelError("", "Cannot remove user existing roles");
-                return View(model);
-            }
-            result = await _userManager.AddToRolesAsync(user, model.Where(x => x.Selected).Select(y => y.RoleName));
-            if (!result.Succeeded)
-            {
-                ModelState.AddModelError("", "Cannot add selected roles to user");
-                return View(model);
-            }
-            return RedirectToAction("Index");
-        }
-
-        private async Task<List<string>> GetUserRoles(ApplicationUser user)
-        {
-            return new List<string>(await _userManager.GetRolesAsync(user));
+            result = await _userManager.AddToRolesAsync(user, model.UserRoles.Where(x => x.Selected).Select(y => y.RoleName));
+            var currentUser = await _userManager.GetUserAsync(User);
+            await _signInManager.RefreshSignInAsync(currentUser);
+            await Seeds.DefaultUsers.SeedSuperAdminAsync(_userManager, _roleManager);
+            return RedirectToAction("Index", new { userId = id });
         }
     }
 }

@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using SmartAdmin.WebUI.Constants;
+using SmartAdmin.WebUI.Models;
+using SmartAdmin.WebUI.Seeds;
 
 namespace SmartAdmin.WebUI.Controllers
 {
@@ -16,6 +19,7 @@ namespace SmartAdmin.WebUI.Controllers
         {
             _roleManager = roleManager;
         }
+
         public async Task<ActionResult> Index(string roleId)
         {
             var model = new PermissionViewModel();
@@ -37,6 +41,7 @@ namespace SmartAdmin.WebUI.Controllers
             model.RoleClaims = allPermissions;
             return View(model);
         }
+
         public async Task<IActionResult> Update(PermissionViewModel model)
         {
             var role = await _roleManager.FindByIdAsync(model.RoleId);
