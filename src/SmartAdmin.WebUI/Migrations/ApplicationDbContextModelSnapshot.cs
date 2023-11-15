@@ -17,7 +17,6 @@ namespace SmartAdmin.WebUI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("Identity")
                 .HasAnnotation("ProductVersion", "7.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -47,7 +46,7 @@ namespace SmartAdmin.WebUI.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("Role", "Identity");
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -72,7 +71,7 @@ namespace SmartAdmin.WebUI.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RoleClaims", "Identity");
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
@@ -85,6 +84,10 @@ namespace SmartAdmin.WebUI.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -137,9 +140,11 @@ namespace SmartAdmin.WebUI.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers", "Identity");
+                    b.ToTable("AspNetUsers", (string)null);
 
-                    b.UseTptMappingStrategy();
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -164,7 +169,7 @@ namespace SmartAdmin.WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserClaims", "Identity");
+                    b.ToTable("AspNetUserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -186,7 +191,7 @@ namespace SmartAdmin.WebUI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserLogins", "Identity");
+                    b.ToTable("AspNetUserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -201,7 +206,7 @@ namespace SmartAdmin.WebUI.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UserRoles", "Identity");
+                    b.ToTable("AspNetUserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -220,7 +225,7 @@ namespace SmartAdmin.WebUI.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("UserTokens", "Identity");
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("SmartAdmin.WebUI.Models.Funcionario", b =>
@@ -245,7 +250,7 @@ namespace SmartAdmin.WebUI.Migrations
 
                     b.HasKey("FuncionarioId");
 
-                    b.ToTable("Funcionarios", "Identity");
+                    b.ToTable("Funcionarios");
 
                     b.HasData(
                         new
@@ -255,43 +260,6 @@ namespace SmartAdmin.WebUI.Migrations
                             Email = "carlos.itdeveloper@gmail.com",
                             Nome = "Carlos Alberto"
                         });
-                });
-
-            modelBuilder.Entity("SmartAdmin.WebUI.Models.UserPermission", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ActionName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("CanAccessAll")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CanDelete")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CanRead")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CanWrite")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ControllerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserPermissions", "Identity");
                 });
 
             modelBuilder.Entity("SmartAdmin.WebUI.Models.ApplicationUser", b =>
@@ -310,7 +278,7 @@ namespace SmartAdmin.WebUI.Migrations
                     b.Property<int>("UsernameChangeLimit")
                         .HasColumnType("int");
 
-                    b.ToTable("User", "Identity");
+                    b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -360,26 +328,6 @@ namespace SmartAdmin.WebUI.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SmartAdmin.WebUI.Models.UserPermission", b =>
-                {
-                    b.HasOne("SmartAdmin.WebUI.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SmartAdmin.WebUI.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                        .WithOne()
-                        .HasForeignKey("SmartAdmin.WebUI.Models.ApplicationUser", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

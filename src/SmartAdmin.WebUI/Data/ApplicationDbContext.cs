@@ -11,6 +11,7 @@ namespace SmartAdmin.WebUI.Data
             : base(options){}
 
         public DbSet<Funcionario> Funcionarios { get; set; }
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -26,42 +27,42 @@ namespace SmartAdmin.WebUI.Data
                             Email = "carlos.itdeveloper@gmail.com"
                         });
             
-            builder.HasDefaultSchema("Identity");
-            _ = builder.Entity<ApplicationUser>(entity =>
-            {
-                entity.ToTable(name: "User");
-            });
+            //builder.HasDefaultSchema("Identity");
+            //_ = builder.Entity<ApplicationUser>(entity =>
+            //{
+            //    entity.ToTable(name: "User");
+            //});
 
-            _ = builder.Entity<IdentityRole>(entity =>
-            {
-                entity.ToTable(name: "Role");
-            });
+            //_ = builder.Entity<IdentityRole>(entity =>
+            //{
+            //    entity.ToTable(name: "Role");
+            //});
 
-            _ = builder.Entity<IdentityUserRole<string>>(entity =>
-            {
-                entity.ToTable("UserRoles");
-            });
+            //_ = builder.Entity<IdentityUserRole<string>>(entity =>
+            //{
+            //    entity.ToTable("UserRoles");
+            //});
 
-            _ = builder.Entity<IdentityUserClaim<string>>(entity =>
-            {
-                entity.ToTable("UserClaims");
-            });
+            //_ = builder.Entity<IdentityUserClaim<string>>(entity =>
+            //{
+            //    entity.ToTable("UserClaims");
+            //});
 
-            _ = builder.Entity<IdentityUserLogin<string>>(entity =>
-            {
-                entity.ToTable("UserLogins");
-            });
+            //_ = builder.Entity<IdentityUserLogin<string>>(entity =>
+            //{
+            //    entity.ToTable("UserLogins");
+            //});
 
-            _ = builder.Entity<IdentityRoleClaim<string>>(entity =>
-            {
-                entity.ToTable("RoleClaims");
+            //_ = builder.Entity<IdentityRoleClaim<string>>(entity =>
+            //{
+            //    entity.ToTable("RoleClaims");
 
-            });
+            //});
 
-            _ = builder.Entity<IdentityUserToken<string>>(entity =>
-            {
-                entity.ToTable("UserTokens");
-            });
+            //_ = builder.Entity<IdentityUserToken<string>>(entity =>
+            //{
+            //    entity.ToTable("UserTokens");
+            //});
         } 
 
     }

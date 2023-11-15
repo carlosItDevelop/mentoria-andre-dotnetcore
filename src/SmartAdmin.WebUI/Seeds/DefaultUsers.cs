@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using SmartAdmin.WebUI.Constants;
 using SmartAdmin.WebUI.Enums;
 using SmartAdmin.WebUI.Models;
 using System.Linq;
@@ -14,12 +15,12 @@ namespace SmartAdmin.WebUI.Seeds
             //Seed Default User
             var defaultUser = new ApplicationUser
             {
-                UserName = "superadmin",
-                Email = "contato.cooperchip@gmail.com",
-                FirstName = "Carlos A",
-                LastName = "Santos",
+                UserName = "basicuser@gmail.com",
+                Email = "basicuser@gmail.com",
+                FirstName = "Claudia",
+                LastName = "Jezler",
                 EmailConfirmed = true,
-                PhoneNumberConfirmed = true
+                PhoneNumberConfirmed = true,
             };
             if (userManager.Users.All(u => u.Id != defaultUser.Id))
             {
@@ -39,8 +40,8 @@ namespace SmartAdmin.WebUI.Seeds
             {
                 UserName = "superadmin@gmail.com",
                 Email = "superadmin@gmail.com",
-                FirstName = "Claudia",
-                LastName = "Jezler",
+                FirstName = "Carlos A",
+                LastName = "Santos",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
             };

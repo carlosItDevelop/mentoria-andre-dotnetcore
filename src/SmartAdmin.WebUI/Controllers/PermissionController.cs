@@ -7,6 +7,7 @@ using System.Linq;
 using SmartAdmin.WebUI.Constants;
 using SmartAdmin.WebUI.Models;
 using SmartAdmin.WebUI.Seeds;
+using SmartAdmin.WebUI.Helpers;
 
 namespace SmartAdmin.WebUI.Controllers
 {
