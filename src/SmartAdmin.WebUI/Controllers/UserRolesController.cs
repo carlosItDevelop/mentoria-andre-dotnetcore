@@ -20,7 +20,7 @@ namespace SmartAdmin.WebUI.Controllers
             _userManager = userManager;
         }
 
-        [Authorize(Roles = "Basic")]
+        //[Authorize(Roles = "Basic")]
         public async Task<IActionResult> Index()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -38,7 +38,7 @@ namespace SmartAdmin.WebUI.Controllers
             return View(userRolesViewModel);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Manage(string userId)
         {
             ViewBag.userId = userId;
@@ -70,7 +70,7 @@ namespace SmartAdmin.WebUI.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "SuperAdmin")]
+        //[Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> Manage(List<ManageUserRolesViewModel> model, string userId)
         {

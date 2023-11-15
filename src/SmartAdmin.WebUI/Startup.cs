@@ -74,14 +74,16 @@ namespace SmartAdmin.WebUI
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
             });
 
-            // Attibuto Global de Autorização
-            services.AddControllersWithViews(config =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                       .RequireAuthenticatedUser()
-                       .Build();
-                config.Filters.Add(new AuthorizeFilter(policy));
-            });
+            //Attibuto Global de Autorização
+            //services.AddControllersWithViews(config =>
+            //{
+            //    var policy = new AuthorizationPolicyBuilder()
+            //           .RequireAuthenticatedUser()
+            //           .Build();
+            //    config.Filters.Add(new AuthorizeFilter(policy));
+            //});
+
+            services.AddControllersWithViews();
 
             services.AddRazorPages();
         }

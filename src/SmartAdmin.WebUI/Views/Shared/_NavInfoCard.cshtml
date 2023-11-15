@@ -1,11 +1,27 @@
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
 <div class="info-card">
-	<img src="~/img/demo/avatars/@(Settings.Theme.Avatar)" class="profile-image rounded-circle" alt="@(Settings.Theme.User)">
-	<div class="info-card-text">
-		<a href="#" class="d-flex align-items-center text-white">
-			<span class="text-truncate text-truncate-sm d-inline-block">
-				@(Settings.Theme.User)
-			</span>
-		</a>
+@* 	<img src="~/img/demo/avatars/@(Settings.Theme.Avatar)" class="profile-image rounded-circle" alt="@(Settings.Theme.User)">
+ *@	<div class="info-card-text">
+
+        @if (SignInManager.IsSignedIn(User))
+        {
+            @if (UserManager.GetUserAsync(User).Result.ProfilePicture != null)
+            {
+                <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
+            }
+        } else
+        {
+            <a href="#" class="d-flex align-items-center text-white">
+                <span class="text-truncate text-truncate-sm d-inline-block">
+                    @(Settings.Theme.User)
+                </span>
+            </a>
+        }
+
+
 		<span class="d-inline-block text-truncate text-truncate-sm">Toronto, Canada</span>
 	</div>
 	<img src="~/img/card-backgrounds/cover-5-lg.png" class="cover" alt="cover">
