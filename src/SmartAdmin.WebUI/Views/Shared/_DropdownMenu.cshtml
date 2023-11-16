@@ -12,6 +12,11 @@
             @if (UserManager.GetUserAsync(User).Result.ProfilePicture != null)
             {
                 <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
+            } else
+            {
+                <span class="mr-2">
+                    <img src="~/img/demo/avatars/@(Settings.Theme.Avatar)" class="rounded-circle profile-image" alt="@(Settings.Theme.User)">
+                </span>
             }
         } else
         {
